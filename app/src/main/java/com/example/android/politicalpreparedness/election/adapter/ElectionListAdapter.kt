@@ -41,7 +41,6 @@ class ElectionViewHolder(val binding: ViewholderElectionBinding) : RecyclerView.
     }
 }
 
-//TODO: Create ElectionDiffCallback
 class ElectionDiffCallback : DiffUtil.ItemCallback<Election>() {
     override fun areItemsTheSame(oldItem: Election, newItem: Election): Boolean {
         return oldItem == newItem

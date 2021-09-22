@@ -90,7 +90,6 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) : R
 
 }
 
-//TODO: Create RepresentativeDiffCallback
 class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
     override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
         return oldItem == newItem
