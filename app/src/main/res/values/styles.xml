@@ -16,4 +16,16 @@
         <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
 
+    <style name="ToolbarVoterInfo">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="LinkStyle">
+        <item name="android:drawableStart">@drawable/ic_baseline_link_24</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:selectable">true</item>
+        <item name="android:autoUrlDetect">true</item>
+    </style>
+
 </resources>

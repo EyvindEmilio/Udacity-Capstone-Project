@@ -27,9 +27,21 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
+        <ProgressBar
+            android:id="@+id/pbLoaderUpcoming"
+            style="?android:attr/progressBarStyle"
+            showIfLoading="@{electionViewModel.loadingUpcoming}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/tvSavedElectionsTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUpcomingElectionsTitle" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvUpcomingElections"
             electionsList="@{electionViewModel.electionsList}"
+            hideIfLoading="@{electionViewModel.loadingUpcoming}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -52,9 +64,22 @@
             app:layout_constraintTop_toBottomOf="@id/rvUpcomingElections"
             app:layout_constraintVertical_chainStyle="packed" />
 
+        <ProgressBar
+            android:id="@+id/pbLoaderSaved"
+            style="?android:attr/progressBarStyle"
+            showIfLoading="@{electionViewModel.loadingSavedElections}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSavedElectionsTitle"
+            app:layout_constraintVertical_chainStyle="packed" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSavedElections"
             electionsList="@{electionViewModel.savedElectionsList}"
+            hideIfLoading="@{electionViewModel.loadingSavedElections}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

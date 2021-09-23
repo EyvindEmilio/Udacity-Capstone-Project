@@ -1,14 +1,15 @@
 package com.example.android.politicalpreparedness.election
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.database.ElectionDatabase
-import com.example.android.politicalpreparedness.database.ElectionLocalRepository
+import com.example.android.politicalpreparedness.database.ElectionRepository
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
@@ -22,7 +23,7 @@ class ElectionsFragment : Fragment() {
     lateinit var bind: FragmentElectionBinding
 
     companion object {
-        private val TAG = "ElectionsFragment"
+        private val TAG = ElectionsFragment::class.java.simpleName
     }
 
     override fun onCreateView(
@@ -33,7 +34,7 @@ class ElectionsFragment : Fragment() {
         bind = FragmentElectionBinding.inflate(inflater, container, false)
         //TODO: Add ViewModel values and create ViewModel
         val repository =
-            ElectionLocalRepository(ElectionDatabase.getInstance(requireContext()).electionDao)
+            ElectionRepository(ElectionDatabase.getInstance(requireContext()).electionDao)
 
         electionsVM = ViewModelProvider(
             viewModelStore,
@@ -47,9 +48,19 @@ class ElectionsFragment : Fragment() {
 
 
         //TODO: Link elections to voter info
+        electionsVM.navigateElection.observe(viewLifecycleOwner, Observer { election ->
+            election?.let {
+                findNavController().navigate(
+                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
+                        election.id, election.division
+                    )
+                )
+                electionsVM.resetNavigation()
+            }
+        })
         val electionListener = object : ElectionListener {
             override fun onClick(election: Election) {
-                Log.d(TAG, "Click")
+                electionsVM.onElectionSelect(election)
             }
         }
 
@@ -62,6 +73,7 @@ class ElectionsFragment : Fragment() {
         bind.rvSavedElections.adapter = savedElectionListAdapter
 
         bind.executePendingBindings()
+
         return bind.root
     }
 

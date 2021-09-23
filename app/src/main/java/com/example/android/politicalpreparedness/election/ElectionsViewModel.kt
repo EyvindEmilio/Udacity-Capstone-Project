@@ -24,6 +24,10 @@ class ElectionsViewModel(
     val loadingSavedElections: LiveData<Boolean>
         get() = _loadingSavedElections
 
+    private val _navigateElection = MutableLiveData<Election?>()
+    val navigateElection: LiveData<Election?>
+        get() = _navigateElection
+
     //TODO: Create live data val for upcoming elections
     private val _electionsList = MutableLiveData<List<Election>>()
     val electionsList: LiveData<List<Election>>
@@ -38,8 +42,7 @@ class ElectionsViewModel(
     fun loadUpcomingElections() {
         _loadingUpcoming.value = true
         viewModelScope.launch(Dispatchers.Default) {
-            dataSource.refreshElectionsFromServer()
-            val elections = dataSource.getElections()
+            val elections = dataSource.getElectionsFromServer()
             withContext(Dispatchers.Main) {
                 _electionsList.value = elections
                 _loadingUpcoming.value = false
@@ -58,7 +61,12 @@ class ElectionsViewModel(
         }
     }
 
-
     //TODO: Create functions to navigate to saved or upcoming election voter info
+    fun onElectionSelect(election: Election) {
+        _navigateElection.value = election
+    }
 
+    fun resetNavigation() {
+        _navigateElection.value = null
+    }
 }

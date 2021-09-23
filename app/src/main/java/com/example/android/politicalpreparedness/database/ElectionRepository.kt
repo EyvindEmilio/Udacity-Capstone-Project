@@ -2,13 +2,14 @@ package com.example.android.politicalpreparedness.database
 
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
-class ElectionLocalRepository(
+class ElectionRepository(
     private val electionsDao: ElectionDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ElectionDataSource {
@@ -45,11 +46,17 @@ class ElectionLocalRepository(
         }
     }
 
-    override suspend fun refreshElectionsFromServer() {
-        val elections = getElectionsFromServer()
-        withContext(Dispatchers.Default) {
-            deleteAllElections()
-            insertElections(elections)
+    override suspend fun getVoterFromServer(address: String, electionId: Int): VoterInfoResponse? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val electionResponse =
+                    CivicsApi.retrofitService.getVoterInfo(address, electionId).execute().body()
+                electionResponse
+            } catch (e: HttpException) {
+                null
+            } catch (e: IOException) {
+                null
+            }
         }
     }
 

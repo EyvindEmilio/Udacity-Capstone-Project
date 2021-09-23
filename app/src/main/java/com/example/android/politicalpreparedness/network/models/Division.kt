@@ -5,7 +5,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Division(
-        val id: String,
-        val country: String,
-        val state: String
-) : Parcelable
+    val id: String,
+    val country: String,
+    val state: String
+) : Parcelable {
+    override fun toString(): String {
+        return "Division(id='$id', country='$country', state='$state')"
+    }
+}
