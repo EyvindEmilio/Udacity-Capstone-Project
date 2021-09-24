@@ -15,7 +15,8 @@ import com.example.android.politicalpreparedness.databinding.ViewholderRepresent
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
-class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
+class RepresentativeListAdapter(val listener: RepresentativeListener) :
+    ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeViewHolder {
         return RepresentativeViewHolder.from(parent)
@@ -23,11 +24,15 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeView
 
     override fun onBindViewHolder(holder: RepresentativeViewHolder, position: Int) {
         val item = getItem(position)
+        holder.itemView.setOnClickListener {
+            listener.onClick(item)
+        }
         holder.bind(item)
     }
 }
 
-class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) : RecyclerView.ViewHolder(binding.root) {
+class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     companion object {
         fun from(viewGroup: ViewGroup): RepresentativeViewHolder {
@@ -42,9 +47,11 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) : R
         binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
         //TODO: Show social links ** Hint: Use provided helper methods
+        showSocialLinks(item.official.channels ?: listOf())
         //TODO: Show www link ** Hint: Use provided helper methods
-
+        showWWWLinks(item.official.urls ?: listOf())
         binding.executePendingBindings()
+        binding.invalidateAll()
     }
 
     //TODO: Add companion object to inflate ViewHolder (from)
@@ -53,11 +60,15 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) : R
         val facebookUrl = getFacebookUrl(channels)
         if (!facebookUrl.isNullOrBlank()) {
             enableLink(binding.facebookIcon, facebookUrl)
+        } else {
+            disableLink(binding.facebookIcon)
         }
 
         val twitterUrl = getTwitterUrl(channels)
         if (!twitterUrl.isNullOrBlank()) {
             enableLink(binding.twitterIcon, twitterUrl)
+        } else {
+            disableLink(binding.twitterIcon)
         }
     }
 
@@ -67,19 +78,23 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding) : R
 
     private fun getFacebookUrl(channels: List<Channel>): String? {
         return channels.filter { channel -> channel.type == "Facebook" }
-                .map { channel -> "https://www.facebook.com/${channel.id}" }
-                .firstOrNull()
+            .map { channel -> "https://www.facebook.com/${channel.id}" }
+            .firstOrNull()
     }
 
     private fun getTwitterUrl(channels: List<Channel>): String? {
         return channels.filter { channel -> channel.type == "Twitter" }
-                .map { channel -> "https://www.twitter.com/${channel.id}" }
-                .firstOrNull()
+            .map { channel -> "https://www.twitter.com/${channel.id}" }
+            .firstOrNull()
     }
 
     private fun enableLink(view: ImageView, url: String) {
         view.visibility = View.VISIBLE
         view.setOnClickListener { setIntent(url) }
+    }
+
+    private fun disableLink(view: ImageView) {
+        view.visibility = View.GONE
     }
 
     private fun setIntent(url: String) {

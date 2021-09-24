@@ -18,6 +18,8 @@
     <string name="election_information">Election Information</string>
     <string name="correspondence_address">Correspondence Address</string>
     <string name="no_data_found">No data found</string>
+    <string name="location_permission_is_required">Location Permission is required</string>
+    <string name="cannot_get_location">Can\'t get current location</string>
 
     <!-- TODO: Add necessary string values -->
 

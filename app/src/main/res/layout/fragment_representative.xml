@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:motion="http://schemas.android.com/tools">
-
+    xmlns:motion="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!---->
     <!-- TODO: Add data binding node -->
+    <data>
 
+        <variable
+            name="representativeVM"
+            type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
+    </data>
     <!-- TODO: Add motion scene to hide form on vertical scroll. -->
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutDescription="@xml/fragment_representative_scene">
+        <!---->
 
         <!-- TODO: Add visual styling and content -->
         <androidx.appcompat.widget.AppCompatTextView
@@ -30,6 +37,7 @@
             android:autofillHints=""
             android:hint="@string/address_line_1"
             android:inputType="textPostalAddress"
+            android:text="@={ representativeVM.addressLD.line1 }"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_title" />
 
@@ -42,6 +50,7 @@
             android:autofillHints=""
             android:hint="@string/address_line_2"
             android:inputType="textPostalAddress"
+            android:text="@={ representativeVM.addressLD.line2 }"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address_line_1" />
 
@@ -54,6 +63,7 @@
             android:autofillHints=""
             android:hint="@string/city"
             android:inputType="textPostalAddress"
+            android:text="@={ representativeVM.addressLD.city }"
             app:layout_constraintEnd_toStartOf="@id/state"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address_line_2" />
@@ -82,6 +92,7 @@
             android:hint="@string/zip"
             android:inputType="number"
             android:maxLength="5"
+            android:text="@={ representativeVM.addressLD.zip }"
             app:layout_constraintEnd_toEndOf="@id/city"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/city" />
@@ -118,12 +129,27 @@
 
         <!-- TODO: Add Representatives RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRepresentatives"
+            representativeList="@{ representativeVM.representativesLD }"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/representative_title" />
+            app:layout_constraintTop_toBottomOf="@id/representative_title"
+            tools:listItem="@layout/viewholder_representative" />
+
+        <ProgressBar
+            android:id="@+id/pbLoaderUpcoming"
+            style="?android:attr/progressBarStyle"
+            showIfLoading="@{representativeVM.loader}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/rvRepresentatives"
+            app:layout_constraintEnd_toEndOf="@id/rvRepresentatives"
+            app:layout_constraintStart_toStartOf="@id/rvRepresentatives"
+            app:layout_constraintTop_toTopOf="@id/rvRepresentatives" />
 
         <!-- TODO: Add visual styling and content -->
         <androidx.appcompat.widget.AppCompatTextView

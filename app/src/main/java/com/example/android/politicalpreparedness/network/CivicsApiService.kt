@@ -50,7 +50,7 @@ interface CivicsApiService {
 
     //TODO: Add representatives API Call
     @GET("representatives")
-    fun getRepresentatives(): Call<RepresentativeResponse>
+    fun getRepresentatives(@Query("address") address: String): Call<RepresentativeResponse>
 }
 
 object CivicsApi {
