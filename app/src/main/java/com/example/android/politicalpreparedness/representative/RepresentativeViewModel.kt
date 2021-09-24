@@ -1,6 +1,5 @@
 package com.example.android.politicalpreparedness.representative
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,8 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class RepresentativeViewModel(
-    val application: Application,
-    val representativeDataSource: RepresentativeDataSource
+    private val representativeDataSource: RepresentativeDataSource
 ) : ViewModel() {
 
     companion object {
@@ -72,7 +70,7 @@ class RepresentativeViewModel(
                 val representatives = representativeDataSource.getRepresentative(it)
                 withContext(Dispatchers.Main) {
                     _representativesLD.value = representatives
-                    _loader.value = true
+                    _loader.value = false
                 }
             }
         }
@@ -89,7 +87,7 @@ class RepresentativeViewModel(
      */
 
     //TODO: Create function get address from geo location
-
+    //Implemented in repository
     //TODO: Create function to get address from individual fields
-
+    //Implemented in repository
 }

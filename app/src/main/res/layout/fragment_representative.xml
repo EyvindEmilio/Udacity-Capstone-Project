@@ -140,6 +140,7 @@
             app:layout_constraintTop_toBottomOf="@id/representative_title"
             tools:listItem="@layout/viewholder_representative" />
 
+        <!-- TODO: Add visual styling and content -->
         <ProgressBar
             android:id="@+id/pbLoaderUpcoming"
             style="?android:attr/progressBarStyle"
@@ -151,7 +152,6 @@
             app:layout_constraintStart_toStartOf="@id/rvRepresentatives"
             app:layout_constraintTop_toTopOf="@id/rvRepresentatives" />
 
-        <!-- TODO: Add visual styling and content -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/list_placeholder"
             android:layout_width="match_parent"

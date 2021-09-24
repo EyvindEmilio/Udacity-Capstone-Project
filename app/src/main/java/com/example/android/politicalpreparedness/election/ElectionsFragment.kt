@@ -38,7 +38,7 @@ class ElectionsFragment : Fragment() {
 
         electionsVM = ViewModelProvider(
             viewModelStore,
-            ElectionsViewModelFactory(requireActivity().application, repository)
+            ElectionsViewModelFactory(repository)
         ).get(ElectionsViewModel::class.java)
 
         //TODO: Add binding values

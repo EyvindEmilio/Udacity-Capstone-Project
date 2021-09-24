@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- TODO: Add necessary dimension values -->
+
     <dimen name="default_padding">8dp</dimen>
     <dimen name="action_button_margin">8dp</dimen>
     <dimen name="icon_social_size">24dp</dimen>
     <dimen name="icon_social_margin">4dp</dimen>
     <dimen name="icon_profile_size">54dp</dimen>
-
-    <!-- TODO: Add necessary dimension values -->s
 
 </resources>

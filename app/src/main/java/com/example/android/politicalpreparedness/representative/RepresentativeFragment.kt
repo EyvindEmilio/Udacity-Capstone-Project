@@ -48,10 +48,7 @@ class DetailFragment : Fragment() {
         //TODO: Establish bindings
         representativeVM = ViewModelProvider(
             viewModelStore,
-            RepresentativeViewModelFactory(
-                requireActivity().application,
-                RepresentativeRepository()
-            )
+            RepresentativeViewModelFactory(RepresentativeRepository())
         ).get(RepresentativeViewModel::class.java)
         bind.lifecycleOwner = viewLifecycleOwner
         bind.representativeVM = representativeVM

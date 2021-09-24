@@ -13,7 +13,6 @@ import kotlinx.coroutines.withContext
 
 //TODO: Construct ViewModel and provide election datasource
 class ElectionsViewModel(
-    app: Application,
     private val dataSource: ElectionDataSource
 ) : ViewModel() {
     private val _loadingUpcoming = MutableLiveData<Boolean>()

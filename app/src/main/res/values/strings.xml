@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- TODO: Add necessary string values -->
     <string name="app_name">Political Preparedness</string>
     <string name="find_my_representatives">Find my representatives</string>
     <string name="upcoming_elections">Upcoming Elections</string>
@@ -20,7 +22,5 @@
     <string name="no_data_found">No data found</string>
     <string name="location_permission_is_required">Location Permission is required</string>
     <string name="cannot_get_location">Can\'t get current location</string>
-
-    <!-- TODO: Add necessary string values -->
 
 </resources>

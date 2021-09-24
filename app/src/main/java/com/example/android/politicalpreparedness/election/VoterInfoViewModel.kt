@@ -98,6 +98,10 @@ class VoterInfoViewModel(private val dataSource: ElectionDataSource) : ViewModel
     val isElectionSavedLD: LiveData<Boolean>
         get() = _isElectionSavedLD
 
+    //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
+    /**
+     * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.
+     */
     fun checkElectionSaved() {
         val electionId = _electionIdLD.value ?: -1
         viewModelScope.launch(Dispatchers.Default) {
@@ -127,11 +131,5 @@ class VoterInfoViewModel(private val dataSource: ElectionDataSource) : ViewModel
             }
         }
     }
-
-    //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
-
-    /**
-     * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.
-     */
 
 }
